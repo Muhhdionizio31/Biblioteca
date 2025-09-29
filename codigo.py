@@ -1,4 +1,5 @@
 import sqlite3
+from funcoes import cadastrar_livros
 
 # Criar uma conexão com o banco de dados chamado "escola.db"
 conexao = sqlite3.connect("biblioteca.db")
@@ -9,11 +10,21 @@ cursor = conexao.cursor()
 # Criar uma tabela 
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS alunos (
+CREATE TABLE IF NOT EXISTS biblioteca (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     titulo TEXT NOT NULL, 
     autor TEXT NOT NULL,
-    ano INTENGER,
-    disponivel TEXT DEFAULT "sim",
+    ano TEXT NOT NULL,
+    disponivel TEXT
     )
 """)
+
+titulo = input("Digite o título do livro: ")
+autor = input("Digite o autor do livro: ")
+ano = input("Digite o ano do livro: ")
+disponivel = input("O livro está disponível? (sim/não): ")
+
+cadastrar_livros(titulo, autor, ano, disponivel)
+
+
+
