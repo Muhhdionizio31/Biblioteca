@@ -1,5 +1,5 @@
 import sqlite3
-from funcoes import cadastrar_livros
+from funcoes import cadastrar_livros, listar_livros
 
 # Criar uma conexão com o banco de dados chamado "escola.db"
 conexao = sqlite3.connect("biblioteca.db")
@@ -26,5 +26,4 @@ disponivel = input("O livro está disponível? (sim/não): ")
 
 cadastrar_livros(titulo, autor, ano, disponivel)
 
-
-
+print(listar_livros())
