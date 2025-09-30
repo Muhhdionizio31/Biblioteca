@@ -1,6 +1,6 @@
 import sqlite3
 import funcoes as op
-
+import streamlit as st
 # Criar uma conexão com o banco de dados chamado "escola.db"
 conexao = sqlite3.connect("biblioteca.db")
 
@@ -19,72 +19,58 @@ CREATE TABLE IF NOT EXISTS biblioteca (
 """)
 
 # Loop do menu principal
-while True:
-    print("\n---- Sistema da Biblioteca ----")
-    print("1. Cadastrar Livro")
-    print("2. Listar Livros")
-    print("3. Atualizar Livro")
-    print("4. Remover Livro")
-    print("5. Sair")
 
-    opcao = input("Escolha uma opção: ")
+st.title("📚 Sistema de Biblioteca")
+dados = op.listar_livros
+menu = ["Cadastrar Livro", "Listar Livros", "Atualizar Livro", "Remover Livro"]
+escolha = st.sidebar.selectbox("Menu", menu)
 
-    if opcao == "1":
-        # Cadastrar Livro
-        titulo = input("Digite o título do livro: ").strip().lower()
-        autor = input("Digite o autor do livro: ").strip().lower()
-        ano = input("Digite o ano do livro: ").strip().lower()
-        disponivel = input("O livro está disponível? (sim/não): ").strip().lower()
+    # Cadastrar Livros
+if escolha == "Cadastrar Livro":
+    st.header("Cadastrar Novo Livro")
+    titulo = st.text_input("Título")
+    autor = st.text_input("Autor")
+    ano = st.text_input("Ano")
+    disponivel = st.selectbox("Disponibilidade", ["Sim", "Não"])
 
-        op.cadastrar_livros(titulo, autor, ano, disponivel)
+    if st.button("Cadastrar"):
+        if titulo and autor and ano:
+            op.cadastrar_livros(titulo.capitalize(), autor.capitalize(), ano.capitalize(), disponivel.capitalize())
+        else:
+            st.warning("Preencha todos os campos!")
 
-    elif opcao == "2":
-        # Listar livro
-        op.listar_livros()
-
-    elif opcao == "3":
-        # Atualizar Livro
-        id = int(input("Digite o ID do livro que deseja atualizar: "))
-        while True:
-            print("\nO que deseja atualizar?")
-            print("1. Título")
-            print("2. Autor")
-            print("3. Ano")
-            print("4. Disponibilidade")
-            print("5. Voltar ao menu principal")
-
-            sub_opcao = input("Digite a opção desejada: ")
-
-            if sub_opcao == "1":
-                novo_valor = input("Digite o novo título: ")
-                op.atualizar_livros("titulo", novo_valor, id)
-            elif sub_opcao == "2":
-                novo_valor = input("Digite o novo autor: ")
-                op.atualizar_livros("autor", novo_valor, id)
-            elif sub_opcao == "3":
-                novo_valor = input("Digite o novo ano: ")
-                op.atualizar_livros("ano", novo_valor, id)
-            elif sub_opcao == "4":
-                novo_valor = input("O livro está disponível? (sim/não): ").strip().lower()
-                if novo_valor in ["sim", "não", "nao"]:
-                    op.atualizar_livros("disponivel", novo_valor, id)
-                else:
-                    print("Valor inválido para disponibilidade.")
-            elif sub_opcao == "5":
-                break
-            else:
-                print("Opção inválida. Tente novamente.")
-
-    elif opcao == "4":
-        # Deletar livro pelo ID
-        try:
-            deletar_id = int(input("Informe o ID do livro que deseja deletar: "))
-            op.deletar_livro(deletar_id)
-        except ValueError:
-            print("ID inválido. Digite um número inteiro.")
-
-    elif opcao == "5":
-        print("Encerrando o sistema.")
-        break
+    # Listar Livros
+elif escolha == "Listar Livros":
+    st.header("📖 Lista de Livros")
+    dados = op.listar_livros()
+    if dados:
+        st.table(dados)
     else:
-        print("Opção inválida. Tente novamente.")
+        st.info("Nenhum livro cadastrado.")
+
+    # Atualizar Livros
+elif escolha == "Atualizar Livro":
+    st.header("✏️ Atualizar Livro")
+    dados = op.listar_livros()
+    if dados:
+        st.dataframe(dados)
+        id = st.number_input("Digite o ID do livro a ser atualizado:", min_value=1, step=1)
+        campo = st.selectbox(f"Campo a atualizar", ["titulo", "autor", "ano", "disponivel"])
+        novo_valor = st.text_input("Novo valor")
+
+        if st.button("Atualizar"):
+            op.atualizar_livros(campo, novo_valor, id)
+    else:
+        st.info("Nenhum livro para atualizar.")
+
+    # Remover Livro
+elif escolha == "Remover Livro":
+    st.header("🗑 Remover Livro")
+    dados = op.listar_livros()
+    if dados:
+        st.dataframe(dados)
+        id = st.number_input("Digite o ID do livro a ser removido:", min_value=1, step=1)
+        if st.button("Remover"):
+            op.deletar_livro(id)
+    else:
+        st.warning("Nenhum livro para remover.")

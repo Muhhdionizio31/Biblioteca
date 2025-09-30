@@ -1,6 +1,7 @@
+import streamlit as st
 import sqlite3
 
-def cadastrar_livros(titulo, autor, ano, disponivel):  # Agora aceita 4 argumentos
+def cadastrar_livros(titulo, autor, ano, disponivel):
     try:
         conexao = sqlite3.connect("biblioteca.db")
         cursor = conexao.cursor()
@@ -9,53 +10,47 @@ def cadastrar_livros(titulo, autor, ano, disponivel):  # Agora aceita 4 argument
             VALUES (?, ?, ?, ?)
         """, (titulo, autor, ano, disponivel))
         conexao.commit()
-        print("Livro cadastrado com sucesso!")
+        st.success("Livro cadastrado com sucesso!")
     except Exception as e:
-        print("Ocorreu um erro:", e)
+        st.error(f"Ocorreu um erro: {e}")
     finally:
-        if conexao:
-            conexao.close()
+        conexao.close()
 
 def listar_livros():
     try:
         conexao = sqlite3.connect("biblioteca.db")
         cursor = conexao.cursor()
         cursor.execute("SELECT * FROM biblioteca")
-        for linha in cursor.fetchall():
-            print(f"ID {linha[0]} | TÍTULO: {linha[1]} | AUTOR: {linha[2]} | ANO: {linha[3]} | DISPONIBILIDADE: {linha[4]}")
+        dados = cursor.fetchall()
+        return dados
     except Exception as e:
-        print("Ocorreu um erro:", e)
+        st.error(f"Erro ao listar livros: {e}")
     finally:
-        if conexao:
-            conexao.close()
+        conexao.close()
 
 def atualizar_livros(campo, novo_valor, id):
     try:
         conexao = sqlite3.connect("biblioteca.db")
         cursor = conexao.cursor()
-
-        sql = f"UPDATE biblioteca SET {campo} = ? WHERE id = ?"
-        cursor.execute(sql, (novo_valor, id))
-
+        cursor.execute(f"UPDATE biblioteca SET {campo} = ? WHERE id = ?", (novo_valor, id))
         conexao.commit()
-        print(f"{campo.capitalize()} atualizado com sucesso!")
+        st.success(f"{campo.capitalize()} atualizado com sucesso!")
     except Exception as e:
-        print("Erro ao atualizar os dados:", e)
+        st.error(f"Erro ao atualizar: {e}")
     finally:
         conexao.close()
 
 def deletar_livro(id):
     try:
-        conexao = sqlite3.connect('biblioteca.db')
+        conexao = sqlite3.connect("biblioteca.db")
         cursor = conexao.cursor()
         cursor.execute("DELETE FROM biblioteca WHERE id = ?", (id,))
         conexao.commit()
         if cursor.rowcount == 0:
-            print(f"Nenhum livro encontrado com o ID {id}.")
+            st.warning(f"Nenhum livro com ID {id}.")
         else:
-            print(f"Livro com ID {id} deletado com sucesso.")
-
-    except sqlite3.Error as e:
-        print(f"Erro ao deletar o livro: {e}")
+            st.success(f"Livro com ID {id} deletado com sucesso.")
+    except Exception as e:
+        st.error(f"Erro ao deletar livro: {e}")
     finally:
         conexao.close()
