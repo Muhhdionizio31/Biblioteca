@@ -1,5 +1,5 @@
 import sqlite3
-from funcoes import cadastrar_livros, listar_livros, atualizar_livros, deletar_livro
+import funcoes as op
 
 # Criar uma conexão com o banco de dados chamado "escola.db"
 conexao = sqlite3.connect("biblioteca.db")
@@ -19,53 +19,69 @@ CREATE TABLE IF NOT EXISTS biblioteca (
     )
 """)
 
-"""titulo = input("Digite o título do livro: ").strip().lower()
-autor = input("Digite o autor do livro: ").strip().lower()
-ano = input("Digite o ano do livro: ").strip().lower()
-disponivel = input("O livro está disponível? (sim/não): ").strip().lower()
-
-cadastrar_livros(titulo, autor, ano, disponivel)
-
-print(listar_livros())"""
-
-"""id = int(input("Digite o ID do livro que deseja atualizar: "))
-
+# Loop do menu principal
 while True:
-    print("\nEscolha o que deseja atualizar:")
-    print("1. Título")
-    print("2. Autor")
-    print("3. Ano")
-    print("4. Disponibilidade")
+    print("\n---- Sistema da Biblioteca ----")
+    print("1. Cadastrar Livro")
+    print("2. Listar Livros")
+    print("3. Atualizar Livro")
+    print("4. Remover Livro")
     print("5. Sair")
 
-    opcao = input("Digite a opção desejada: ")
+    opcao = input("Escolha uma opção: ")
 
     if opcao == "1":
-        novo_valor = input("Digite o novo título: ")
-        atualizar_livros("titulo", novo_valor, id)
+        titulo = input("Digite o título do livro: ").strip().lower()
+        autor = input("Digite o autor do livro: ").strip().lower()
+        ano = input("Digite o ano do livro: ").strip().lower()
+        disponivel = input("O livro está disponível? (sim/não): ").strip().lower()
+
+        op.cadastrar_livros(titulo, autor, ano, disponivel)
 
     elif opcao == "2":
-        novo_valor = input("Digite o novo autor: ")
-        atualizar_livros("autor", novo_valor, id)
+        op.listar_livros()
 
     elif opcao == "3":
-        novo_valor = input("Digite o novo ano: ")
-        atualizar_livros("ano", novo_valor, id)
+        id = int(input("Digite o ID do livro que deseja atualizar: "))
+        while True:
+            print("\nO que deseja atualizar?")
+            print("1. Título")
+            print("2. Autor")
+            print("3. Ano")
+            print("4. Disponibilidade")
+            print("5. Voltar ao menu principal")
+
+            sub_opcao = input("Digite a opção desejada: ")
+
+            if sub_opcao == "1":
+                novo_valor = input("Digite o novo título: ")
+                op.atualizar_livros("titulo", novo_valor, id)
+            elif sub_opcao == "2":
+                novo_valor = input("Digite o novo autor: ")
+                op.atualizar_livros("autor", novo_valor, id)
+            elif sub_opcao == "3":
+                novo_valor = input("Digite o novo ano: ")
+                op.atualizar_livros("ano", novo_valor, id)
+            elif sub_opcao == "4":
+                novo_valor = input("O livro está disponível? (sim/não): ").strip().lower()
+                if novo_valor in ["sim", "não", "nao"]:
+                    op.atualizar_livros("disponivel", novo_valor, id)
+                else:
+                    print("Valor inválido para disponibilidade.")
+            elif sub_opcao == "5":
+                break
+            else:
+                print("Opção inválida. Tente novamente.")
 
     elif opcao == "4":
-        disponivel = input("O livro está disponível? (sim/não): ").strip().lower()
-        if disponivel in ["sim", "não", "nao"]:
-            atualizar_livros("disponivel", disponivel, id)
-        else:
-            print("Valor inválido para disponibilidade.")
+        try:
+            deletar_id = int(input("Informe o ID do livro que deseja deletar: "))
+            op.deletar_livro(deletar_id)
+        except ValueError:
+            print("ID inválido. Digite um número inteiro.")
 
     elif opcao == "5":
-        print("Saindo da atualização.")
+        print("Encerrando o sistema.")
         break
-
     else:
         print("Opção inválida. Tente novamente.")
-"""
-
-deletar =  int(input("Informe o ID do livro que deseja deletar: "))
-deletar_livro(deletar)
