@@ -1,67 +1,60 @@
-📚 Sistema de Biblioteca
+📚 **Sistema de Biblioteca**
 
 Um sistema simples de gerenciamento de livros utilizando Python, Streamlit e SQLite. Com ele, é possível cadastrar, listar, atualizar e remover livros de um banco de dados local.
 
-🛠 Funcionalidades
 
-Cadastrar Livro: Insere um novo livro no banco de dados.
+🛠 **Funcionalidades**
 
-Listar Livros: Exibe todos os livros cadastrados.
+└──| Cadastrar Livro: Insere um novo livro no banco de dados.
 
-Atualizar Livro: Permite editar informações de um livro.
+└──| Listar Livros: Exibe todos os livros cadastrados.
 
-Remover Livro: Exclui um livro da base de dados.
+└──| Atualizar Livro: Permite editar informações de um livro.
 
-📦 Tecnologias Utilizadas
+└──| Remover Livro: Exclui um livro da base de dados.
 
-Python
 
-Streamlit
+📦 **Tecnologias Utilizadas**
 
-SQLite3
+└──| Python
 
-▶️ Como Executar o Projeto
+└──| Streamlit
+
+└──| SQLite3
+
+
+▶️ **Como Executar o Projeto**
 
 Clone o repositório:
-
-git clone https://github.com/Muhhdionizio31/Biblioteca
+└── git clone https://github.com/Muhhdionizio31/Biblioteca
 
 Instale as dependências:
-
-pip install streamlit
+└── pip install streamlit
 
 
 Execute o aplicativo:
+└── python -m streamlit run codigo.py
 
-python -m streamlit run codigo.py
 
-📁 Estrutura do Projeto
+📁 **Estrutura do Projeto**
 biblioteca/
 ├── codigo.py               # Arquivo principal com a interface Streamlit
 ├── funcoes.py           # Funções auxiliares (CRUD com SQLite)
 ├── biblioteca.db        # Banco de dados SQLite (gerado automaticamente)
 └── README.md            # Este arquivo
 
-🧠 Como Funciona
 
-Os dados são armazenados em um banco SQLite local (biblioteca.db).
+🧠 **Como Funciona**
 
-A interface é feita com o Streamlit, sendo interativa e fácil de usar.
+└──| Os dados são armazenados em um banco SQLite local (biblioteca.db).
 
-As ações de banco de dados (CRUD) estão separadas no arquivo funcoes.py, facilitando a manutenção do código.
+└──| A interface é feita com o Streamlit, sendo interativa e fácil de usar.
 
-📌 Observações
+└──| As ações de banco de dados (CRUD) estão separadas no arquivo funcoes.py, facilitando a manutenção do código.
 
-Certifique-se de que o arquivo funcoes.py está na mesma pasta que o codigo.py.
 
-O banco de dados é criado automaticamente na primeira execução.
+📌 **Observações**
 
-Para uma versão em produção, seria interessante aplicar melhorias como:
+| Certifique-se de que o arquivo funcoes.py está na mesma pasta que o codigo.py.
 
-Validações mais robustas
-
-Autenticação de usuários
-
-Paginação da lista de livros
-
-Exportação de dados
+| O banco de dados é criado automaticamente na primeira execução.
