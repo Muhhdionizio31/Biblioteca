@@ -26,9 +26,11 @@ Um sistema simples de gerenciamento de livros utilizando Python, Streamlit e SQL
 ▶️ **Como Executar o Projeto**
 
 Clone o repositório:
+
 └── git clone https://github.com/Muhhdionizio31/Biblioteca
 
 Instale as dependências:
+
 └── pip install streamlit
 
 
