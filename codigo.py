@@ -1,5 +1,5 @@
 import sqlite3
-from funcoes import cadastrar_livros, listar_livros, atualizar_livros
+from funcoes import cadastrar_livros, listar_livros, atualizar_livros, deletar_livro
 
 # Criar uma conexão com o banco de dados chamado "escola.db"
 conexao = sqlite3.connect("biblioteca.db")
@@ -28,7 +28,7 @@ cadastrar_livros(titulo, autor, ano, disponivel)
 
 print(listar_livros())"""
 
-id = int(input("Digite o ID do livro que deseja atualizar: "))
+"""id = int(input("Digite o ID do livro que deseja atualizar: "))
 
 while True:
     print("\nEscolha o que deseja atualizar:")
@@ -65,3 +65,7 @@ while True:
 
     else:
         print("Opção inválida. Tente novamente.")
+"""
+
+deletar =  int(input("Informe o ID do livro que deseja deletar: "))
+deletar_livro(deletar)

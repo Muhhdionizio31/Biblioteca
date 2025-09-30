@@ -43,3 +43,19 @@ def atualizar_livros(campo, novo_valor, id):
         print("Erro ao atualizar os dados:", e)
     finally:
         conexao.close()
+
+def deletar_livro(id):
+    try:
+        conexao = sqlite3.connect('biblioteca.db')
+        cursor = conexao.cursor()
+        cursor.execute("DELETE FROM biblioteca WHERE id = ?", (id,))
+        conexao.commit()
+        if cursor.rowcount == 0:
+            print(f"Nenhum livro encontrado com o ID {id}.")
+        else:
+            print(f"Livro com ID {id} deletado com sucesso.")
+
+    except sqlite3.Error as e:
+        print(f"Erro ao deletar o livro: {e}")
+    finally:
+        conexao.close()
