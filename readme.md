@@ -35,14 +35,19 @@ Instale as dependências:
 
 
 Execute o aplicativo:
+
 └── python -m streamlit run codigo.py
 
 
 📁 **Estrutura do Projeto**
 biblioteca/
+
 ├── codigo.py               # Arquivo principal com a interface Streamlit
+
 ├── funcoes.py           # Funções auxiliares (CRUD com SQLite)
+
 ├── biblioteca.db        # Banco de dados SQLite (gerado automaticamente)
+
 └── README.md            # Este arquivo
 
 
