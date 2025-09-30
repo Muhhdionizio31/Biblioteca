@@ -8,7 +8,6 @@ conexao = sqlite3.connect("biblioteca.db")
 cursor = conexao.cursor()
 
 # Criar uma tabela 
-
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS biblioteca (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,6 +30,7 @@ while True:
     opcao = input("Escolha uma opção: ")
 
     if opcao == "1":
+        # Cadastrar Livro
         titulo = input("Digite o título do livro: ").strip().lower()
         autor = input("Digite o autor do livro: ").strip().lower()
         ano = input("Digite o ano do livro: ").strip().lower()
@@ -39,9 +39,11 @@ while True:
         op.cadastrar_livros(titulo, autor, ano, disponivel)
 
     elif opcao == "2":
+        # Listar livro
         op.listar_livros()
 
     elif opcao == "3":
+        # Atualizar Livro
         id = int(input("Digite o ID do livro que deseja atualizar: "))
         while True:
             print("\nO que deseja atualizar?")
@@ -74,6 +76,7 @@ while True:
                 print("Opção inválida. Tente novamente.")
 
     elif opcao == "4":
+        # Deletar livro pelo ID
         try:
             deletar_id = int(input("Informe o ID do livro que deseja deletar: "))
             op.deletar_livro(deletar_id)
