@@ -1,5 +1,5 @@
 import sqlite3
-from funcoes import cadastrar_livros, listar_livros
+from funcoes import cadastrar_livros, listar_livros, atualizar_livros
 
 # Criar uma conexão com o banco de dados chamado "escola.db"
 conexao = sqlite3.connect("biblioteca.db")
@@ -19,11 +19,49 @@ CREATE TABLE IF NOT EXISTS biblioteca (
     )
 """)
 
-titulo = input("Digite o título do livro: ")
-autor = input("Digite o autor do livro: ")
-ano = input("Digite o ano do livro: ")
-disponivel = input("O livro está disponível? (sim/não): ")
+"""titulo = input("Digite o título do livro: ").strip().lower()
+autor = input("Digite o autor do livro: ").strip().lower()
+ano = input("Digite o ano do livro: ").strip().lower()
+disponivel = input("O livro está disponível? (sim/não): ").strip().lower()
 
 cadastrar_livros(titulo, autor, ano, disponivel)
 
-print(listar_livros())
+print(listar_livros())"""
+
+id = int(input("Digite o ID do livro que deseja atualizar: "))
+
+while True:
+    print("\nEscolha o que deseja atualizar:")
+    print("1. Título")
+    print("2. Autor")
+    print("3. Ano")
+    print("4. Disponibilidade")
+    print("5. Sair")
+
+    opcao = input("Digite a opção desejada: ")
+
+    if opcao == "1":
+        novo_valor = input("Digite o novo título: ")
+        atualizar_livros("titulo", novo_valor, id)
+
+    elif opcao == "2":
+        novo_valor = input("Digite o novo autor: ")
+        atualizar_livros("autor", novo_valor, id)
+
+    elif opcao == "3":
+        novo_valor = input("Digite o novo ano: ")
+        atualizar_livros("ano", novo_valor, id)
+
+    elif opcao == "4":
+        disponivel = input("O livro está disponível? (sim/não): ").strip().lower()
+        if disponivel in ["sim", "não", "nao"]:
+            atualizar_livros("disponivel", disponivel, id)
+        else:
+            print("Valor inválido para disponibilidade.")
+
+    elif opcao == "5":
+        print("Saindo da atualização.")
+        break
+
+    else:
+        print("Opção inválida. Tente novamente.")

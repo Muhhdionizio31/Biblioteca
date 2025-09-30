@@ -28,3 +28,18 @@ def listar_livros():
     finally:
         if conexao:
             conexao.close()
+
+def atualizar_livros(campo, novo_valor, id):
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        sql = f"UPDATE biblioteca SET {campo} = ? WHERE id = ?"
+        cursor.execute(sql, (novo_valor, id))
+
+        conexao.commit()
+        print(f"{campo.capitalize()} atualizado com sucesso!")
+    except Exception as e:
+        print("Erro ao atualizar os dados:", e)
+    finally:
+        conexao.close()
